@@ -55,7 +55,7 @@ class RelacionDeVenta(models.Model):
 	venta = models.ForeignKey( "Venta", on_delete = models.CASCADE )
 	cantidad = models.IntegerField();
 	incremento = models.DecimalField( max_digits = 5, decimal_places = 2 )
-	subtotal = models.DecimalField( max_digits = 7, decimal_places = 2 )
+	subtotal = models.DecimalField( max_digits = 7, decimal_places = 2, null = True)
 
 	def precio_incrementado(self):
 		aux = ( Decimal(1) + ( self.incremento / Decimal(100) ) )
