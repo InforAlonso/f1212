@@ -22,5 +22,5 @@ Sistema de gestión de local de informática
 	* Manejo de datos de clientes y sus equipos para facilitar la identificación de los mismos
 
 ## Model de persistencia
-[Así lo encararía yo](https://github.com/InforAlonso/f1212/blob/master/documentacion/como_yo_lo_encararia.md)
-[El encare segundo](https://github.com/InforAlonso/f1212/blob/master/documentacion/el_encare_segundo.md)
+- [Así lo encararía yo](https://github.com/InforAlonso/f1212/blob/master/documentacion/como_yo_lo_encararia.md)
+- [El encare segundo](https://github.com/InforAlonso/f1212/blob/master/documentacion/el_encare_segundo.md)

@@ -7,7 +7,7 @@ class EquipoInline(admin.StackedInline):
     #se puede registrar 1 o más, pero es raro que caigan con muchas computadoras de una
     extra = 1
     fieldsets = [
-    ('Notebooks',{'fields' : ['es_notebook','fabricante', 'modelo']}),
+    ( None,{'fields' : ['tipo_de_equipo','fabricante', 'modelo']}),
     ('Datos del Hardware', {'fields': ['procesador', 'placa_madre', 'memorias', 'discos','lectora', 'gabinete', 'placa_de_video'], 'classes' : ['collapse']}),
     ('Datos extras', {'fields' : ['extras'], 'classes' : ['collapse']})
     ]
@@ -30,13 +30,13 @@ class ClienteAdmin(admin.ModelAdmin):
     inlines = [EquipoInline]
 
 class EquipoAdmin(admin.ModelAdmin):
-    list_display = [ 'dueño', 'es_notebook', '__str__' ]
+    list_display = [ 'dueño', 'tipo_de_equipo' ]
     fieldsets = [
         (None,{'fields' : ['dueño']}),
-        ('Notebooks',{'fields' : ['es_notebook','fabricante', 'modelo']}),
+        ('Notebooks',{'fields' : ['tipo_de_equipo','fabricante', 'modelo']}),
         ('Datos del Hardware', {'fields': ['procesador', 'placa_madre', 'memorias', 'discos','lectora', 'gabinete', 'placa_de_video'], 'classes' : ['collapse']}),
         ('Datos extras', {'fields' : ['extras'], 'classes' : ['collapse']}) ]
-    list_filter = [ 'es_notebook' ]
+    list_filter = [ 'tipo_de_equipo' ]
     search_fields = [ '^dueño__apellido','^dueño__nombre' ]
 
 admin.site.register(Equipo, EquipoAdmin)
