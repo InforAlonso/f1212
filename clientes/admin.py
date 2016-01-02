@@ -18,8 +18,7 @@ class ClienteAdmin(admin.ModelAdmin):
     #Modela como se ven los datos en el registro o edición del cliente
     fieldsets = [
         ('Datos básicos', {'fields':[ 'apellido', 'nombre'],'classes':['wide']}),
-        ('Datos de contacto', {'fields':['email', 'nro_de_telefono'],'classes':['wide']}),
-        ('Información fiscal', {'fields':['cuit', 'cuil'],'classes':['collapse']})    ]
+        ('Información fiscal', {'fields':['nombre_fiscal','direccion_fiscal','cuit','tipo_de_factura' ],'classes':['collapse']})    ]
     #va a crear una entrada de filtro por cada cliente y no sirve
     #list_filter = ['apellido','nombre']
     #parámetros del cuadro de busqueda, a más parámetros, más densa la busqueda
