@@ -3,7 +3,11 @@ from django.utils import timezone
 from datetime import datetime
 
 class Motivo(models.Model):
+    INGRESO = 1
+    EGRESO = -1
+    MULT = ((INGRESO,"Ingreso de dinero"),(EGRESO,"Salida de dinero"))
     detalle = models.CharField( max_length = 150 )
+    multiplicador = models.SmallIntegerField("Dirección de dinero",choices = MULT, default = INGRESO)
     def __str__(self):
         return self.detalle
 
