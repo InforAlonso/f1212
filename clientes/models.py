@@ -40,5 +40,5 @@ class Equipo( models.Model ):
     extras = models.TextField ( null = True, blank = True )
     dueño = models.ForeignKey( 'Cliente', on_delete = models.CASCADE, )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.tipo_de_equipo + " - " + self.dueño
