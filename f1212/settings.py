@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'clientes',
     'caja',
     'ventas',
+    'stock',
 )
 
 MIDDLEWARE_CLASSES = (
