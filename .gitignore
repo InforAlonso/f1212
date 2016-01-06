@@ -107,3 +107,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+caja/migrations/0001_initial.py
+ventas/migrations/0001_initial.py
