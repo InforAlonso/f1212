@@ -1,23 +1,35 @@
 from django.db import models
 
-# Create your models here.
-
 class Cliente( models.Model ):
+    A = "A"
+    B = "B"
+    C = "C"
+    TIPOS_DE_FACTURAS = ((A, "Factura tipo A"),(B, "Factura tipo B"),(C, "Factura tipo C"))
+
     apellido = models.CharField( max_length = 50 )
     nombre = models.CharField( max_length = 50 )
-    nro_de_telefono = models.CharField( max_length = 36, null = True, blank = True )
-    email = models.EmailField( null = True, blank = True )
+    nombre_fiscal = models.CharField( max_length = 100, null = True, blank = True )
+    direccion_fiscal = models.CharField( max_length = 100, null = True, blank = True )
     cuit = models.CharField( max_length = 20, null = True, blank = True )
-    cuil = models.CharField( max_length = 20, null = True, blank = True )
+    tipo_de_factura = models.CharField( max_length = 1, choices = TIPOS_DE_FACTURAS, null = True, blank = True )
 
     def __str__(self):
         aux =  self.apellido + ", " + self.nombre
         return aux
 
 class Equipo( models.Model ):
-    es_notebook = models.BooleanField()
+    PC = "PC"
+    NOTE = "Note"
+    NET = "Net"
+    TAB = "Tab"
+    IMPR = "Impr"
+    TIPOS_DE_EQUIPOS = ((PC,"PC de escritorio"),(NOTE,"Notebook"),(NET,"Netbook"),(TAB,"Tablet"),(IMPR,"Impresora"))
+
+    tipo_de_equipo = models.CharField( max_length = 4, choices = TIPOS_DE_EQUIPOS )
+
     fabricante = models.CharField( max_length = 20, null = True, blank = True )
     modelo = models.CharField( max_length = 20, null = True, blank = True )
+
     procesador = models.CharField( max_length = 30, null = True, blank = True )
     placa_madre = models.CharField( max_length = 30, null = True, blank = True )
     memorias = models.CharField( max_length = 30, null = True, blank = True )
@@ -28,8 +40,5 @@ class Equipo( models.Model ):
     extras = models.TextField ( null = True, blank = True )
     dueño = models.ForeignKey( 'Cliente', on_delete = models.CASCADE, )
 
-    def __str__(self):
-        if self.es_notebook == True:
-            return self.fabricante + " " + self.modelo
-        else:
-            return self.procesador
+    def __unicode__(self):
+        return self.tipo_de_equipo + " - " + self.dueño
