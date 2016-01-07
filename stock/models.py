@@ -15,7 +15,7 @@ class Producto( models.Model ):
     T2 = Decimal(21)
     TIPOS_DE_IVA = ( ( T1, "IVA de %10,5" ), ( T2, "IVA de %21" ), )
     nombre = models.CharField( max_length = 100 )
-    precio = models.DecimalField( max_digits = 7, decimal_places = 2 )
+    precio = models.DecimalField( "Precio en dólares", max_digits = 7, decimal_places = 2 )
     tipo_de_iva = models.DecimalField( max_digits = 5, decimal_places = 2,
         choices = TIPOS_DE_IVA, default= T2, help_text = "Acordate que esto es solo IVA" )
     incremento = models.DecimalField( max_digits = 5, decimal_places = 2,
@@ -35,6 +35,7 @@ class Producto( models.Model ):
         aux *= self.precio
         return "{:.2f}".format( aux )
 
+    # admin_order_field ordena el resultado parseado, soporta lookups"
     #disponibilidad.admin_order_field = 'cantidad'
     disponibilidad.boolean = True
     disponibilidad.short_description = "disponibilidad"

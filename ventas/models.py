@@ -1,6 +1,7 @@
 from django.db import models
 #from stock.models import Producto
 from clientes.models import Cliente
+from stock.models import Producto
 from datetime import date
 from decimal import *
 
@@ -24,13 +25,9 @@ class MiCliente(Cliente):
 	class Meta:
 		proxy = True
 
-class Producto(models.Model):
-	""" SUPER PROVISIONAL PARA SILENCIAR EL ERROR DE FALTA DE MODELO(MUY MAL!)"""
-	nombre = models.CharField( max_length = 50 )
-	precio_en_dolar = models.DecimalField( max_digits = 10, decimal_places = 2 )
-
-	def __str__(self):
-		return "%s u$s%.2f" % (self.nombre, self.precio_en_dolar)
+class MiProducto(Producto):
+	class Meta:
+		proxy = True
 
 class Venta(models.Model):
 	# al tener null = True, permito que exista null en la base de datos, pero
@@ -41,7 +38,7 @@ class Venta(models.Model):
 	# visualización, mejor no calcularlo en el modelo. Además hay que traer el
 	# valor del dolar, y mejor hacerlo con alguna api de monedas y todo eso
 	# lista = RelacionDeVenta.objects.filter( venta_id__exact=self.id )
-	monto_total = models.DecimalField( max_digits = 10, decimal_places = 2 )
+	monto_total = models.DecimalField( max_digits = 10, decimal_places = 2, null = True, blank = True )
 	fecha_de_venta = models.DateField( default = date.today )
 	dolar = models.DecimalField( max_digits = 5, decimal_places = 2 )
 
@@ -51,18 +48,13 @@ class Venta(models.Model):
 class RelacionDeVenta(models.Model):
 	# el incremento puede ir aca o en la venta, lo puse aca para poder personalizar
 	# cada producto que vende, por ahí es muy cargoso, pero es más flexible
-	producto = models.ForeignKey( "Producto", on_delete = models.CASCADE )
+	producto = models.ForeignKey( "MiProducto", on_delete = models.CASCADE )
 	venta = models.ForeignKey( "Venta", on_delete = models.CASCADE )
 	cantidad = models.IntegerField();
-	incremento = models.DecimalField( max_digits = 5, decimal_places = 2 )
-	subtotal = models.DecimalField( max_digits = 7, decimal_places = 2, null = True)
-
-	def precio_incrementado(self):
-		aux = ( Decimal(1) + ( self.incremento / Decimal(100) ) )
-		return Decimal(self.producto.precio_en_dolar * aux )
+	subtotal = models.DecimalField( max_digits = 7, decimal_places = 2, null = True, )
 
 	def calcular_subtotal(self):
-		return self.precio_incrementado() * self.cantidad
+		return Decimal( self.producto.precio_incrementado() ) * self.cantidad
 
 	def __str__(self):
 		return "%s u$s%.2f" % (self.producto.nombre, self.calcular_subtotal())
