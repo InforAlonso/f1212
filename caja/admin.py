@@ -3,6 +3,7 @@ from caja.models import Motivo, Movimiento, Caja
 
 class MotivoAdmin(admin.ModelAdmin):
     search_fields = [ 'detalle' ]
+    list_filter = ['multiplicador']
 
 class MovimientosAdmin(admin.ModelAdmin):
     list_display = [ 'caja', 'motivo', 'fecha' ]
