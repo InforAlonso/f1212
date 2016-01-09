@@ -76,8 +76,8 @@ class RelacionDeVenta(models.Model):
 		aux = cantidad - HayStock.cantidad
 		#este retorno no va a quedar, lo dejo asi por ahora por que no se como manejar un popup 
 		#para que retorne error
-#		if aux > 0:
+		if aux > 0:
 			return self.cantidad
-#		else:
-#			return render_to_response('template_name', message='Error, falta Stock')
+		else:
+			return null
 
