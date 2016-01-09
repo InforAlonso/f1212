@@ -1,6 +1,5 @@
 from django.contrib import admin
 from ventas.models import Venta, MiProducto, RelacionDeVenta, MiCliente
-#from clientes.models import Cliente
 
 class RelacionDeVentaInline(admin.TabularInline):
     model = RelacionDeVenta
