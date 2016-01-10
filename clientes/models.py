@@ -14,18 +14,19 @@ class Cliente( models.Model ):
     tipo_de_factura = models.CharField( max_length = 1, choices = TIPOS_DE_FACTURAS, null = True, blank = True )
 
     def __str__(self):
-        aux =  self.apellido + ", " + self.nombre
-        return aux
+        return "%s, %s" % (self.apellido, self.nombre)
 
 class Equipo( models.Model ):
     PC = "PC"
-    NOTE = "Note"
-    NET = "Net"
-    TAB = "Tab"
-    IMPR = "Impr"
-    TIPOS_DE_EQUIPOS = ((PC,"PC de escritorio"),(NOTE,"Notebook"),(NET,"Netbook"),(TAB,"Tablet"),(IMPR,"Impresora"))
+    NOTE = "Notebook"
+    NET = "Netbook"
+    TAB = "Tablet"
+    IMPR = "Impresora"
+    MON = "Monitor"
+    OTR = "Otro"
+    TIPOS_DE_EQUIPOS = ((PC,"PC de escritorio"),(NOTE,"Notebook"),(NET,"Netbook"),(TAB,"Tablet"),(IMPR,"Impresora"),(MON, "Monitor"),(OTR,"Otro"))
 
-    tipo_de_equipo = models.CharField( max_length = 4, choices = TIPOS_DE_EQUIPOS )
+    tipo_de_equipo = models.CharField( max_length = 9, choices = TIPOS_DE_EQUIPOS )
 
     fabricante = models.CharField( max_length = 20, null = True, blank = True )
     modelo = models.CharField( max_length = 20, null = True, blank = True )
@@ -41,4 +42,4 @@ class Equipo( models.Model ):
     dueño = models.ForeignKey( 'Cliente', on_delete = models.CASCADE, )
 
     def __str__(self):
-        return self.tipo_de_equipo + " - " + self.dueño
+        return "%s - %s - %s" % (self.tipo_de_equipo, self.id, self.dueño.__str__() )
