@@ -28,7 +28,7 @@ class TrabajoDeTaller( models.Model ):
     (REVISADO, "Equipo pendiente de reparación"),
     (EN_REPARACION, "Equipo en proceso de reparación"),
     (TERMINADO, "Equipo terminado"),
-    (ENTREGADO, "Equipo retirado"),    )
+    (ENTREGADO, "Equipo entregado"),    )
 
     fecha_de_inicio = models.DateTimeField( default = timezone.now )
     fecha_estimada = models.DateTimeField( null = True, blank = True )

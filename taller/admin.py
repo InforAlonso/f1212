@@ -10,23 +10,22 @@ class EnElLocalFilter( admin.SimpleListFilter ):
     def lookups(self, request, model_admin):
         return (
         ('SinRevisar', 'Sin revisar'),
-        ('Revisado', 'Revisados'),
-        ('EnRepación', 'En reparación'),
-        ('Terminado', 'Terminados'), 
-        ('Retirado', 'Retirados'),       )
+        ('Revisados', 'Revisados'),
+        ('EnReparacion', 'En reparación'),
+        ('Terminados', 'Terminados'),    )
+        #('Entregados', 'Entregados'),       )
 
     def queryset(self, request, queryset):
-        q = queryset.filter( estado__lt = 6 )
+        """ Solo quiero del 1 al 4, y por defecto, del 1 al 4 todos """
+        q = queryset.filter( estado__lt = 5, estado__gt = 0 )
         if self.value() == 'SinRevisar':
-            return q.filter( estado = 1 )
-        elif self.value() == 'Revisado':
-            return q.filter( estado = 2 )
-        elif self.value() == 'EnReparación':
-            return q.filter( estado = 3 )
-        elif self.value() == 'Terminado':
-            return q.filter( estado = 4 )
-        elif self.value() == 'Entregado':
-            return q.filter( estado = 5 )
+            return q.filter( estado__exact = 1 )
+        elif self.value() == 'Revisados':
+            return q.filter( estado__exact = 2 )
+        elif self.value() == 'EnReparacion':
+            return q.filter( estado__exact = 3 )
+        elif self.value() == 'Terminados':
+            return q.filter( estado__exact = 4 )
         else:
             return q
 
@@ -36,30 +35,16 @@ class EntregadosFilter( admin.SimpleListFilter ):
     default_value = None
 
     def lookups(self, request, model_admin):
-        return (
-        ('Hoy', 'Hoy'),
-        ('Últimos7Días', 'Últimos 7 días'),
-        ('EsteMes', 'Este mes'),
-        ('EsteAño', 'Este año'),
-        ('Todos', 'Todos los equipos entregados')
-        )
+        """ Me cansé del filtro, lo hice más simple, que busque solo por estado
+        si realmente necesita la fecha, la tiene a un clic de distancia """
+
+        return (('Entregados','Entregados'), )
 
     def queryset(self, request, queryset):
-        q = queryset.filter( estado = 5 )
-        hoy = datetime.today()
-        hace_7_dias = hoy - timedelta(days=-7)
-        if self.value() == 'Hoy':
-            return q.filter( fecha_de_inicio__date = hoy.date() )
-        elif self.value() == 'Últimos7Días':
-            return q.filter( fecha_de_inicio__gte = hace_7_dias )
-        elif self.value() == 'EsteMes':
-            return q.filter( fecha_de_inicio__month = hoy.month, fecha_de_inicio__year = hoy.year )
-        elif self.value() == 'EsteAño':
-            return q.filter( fecha_de_inicio__year = hoy.year )
-        elif self.value() == 'Todos':
-            return q
+        if self.value() == 'Entregados':
+            return queryset.filter( estado__exact = 5 )
         else:
-            return queryset
+            return queryset.exclude( estado__exact = 5 )
 
 class TrabajoAdmin( admin.ModelAdmin ):
     list_display = [ 'descripcion' ]
@@ -71,7 +56,7 @@ class TrabajoDeTallerAdmin( admin.ModelAdmin ):
     ('Fechas', { 'fields':['fecha_de_inicio','fecha_estimada','fecha_de_fin']}),
     ('Datos del trabajo',{'fields':['equipo','trabajo','estado']}),
     ]
-    list_filter = [ EnElLocalFilter, 'fecha_de_inicio', EntregadosFilter, ]
+    list_filter = [ 'estado', 'fecha_de_inicio', ]
     search_fields = [ 'equipo__dueño' ]
 
 admin.site.register(Trabajo, TrabajoAdmin)
