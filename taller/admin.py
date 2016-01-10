@@ -12,10 +12,11 @@ class EnElLocalFilter( admin.SimpleListFilter ):
         ('SinRevisar', 'Sin revisar'),
         ('Revisado', 'Revisados'),
         ('EnRepación', 'En reparación'),
-        ('Terminado', 'Terminados'),        )
+        ('Terminado', 'Terminados'), 
+        ('Retirado', 'Retirados'),       )
 
     def queryset(self, request, queryset):
-        q = queryset.filter( estado__lt = 5 )
+        q = queryset.filter( estado__lt = 6 )
         if self.value() == 'SinRevisar':
             return q.filter( estado = 1 )
         elif self.value() == 'Revisado':
@@ -24,6 +25,8 @@ class EnElLocalFilter( admin.SimpleListFilter ):
             return q.filter( estado = 3 )
         elif self.value() == 'Terminado':
             return q.filter( estado = 4 )
+        elif self.value() == 'Entregado':
+            return q.filter( estado = 5 )
         else:
             return q
 
