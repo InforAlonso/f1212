@@ -1,12 +1,10 @@
 from django.contrib import admin
-from ventas.models import Venta, Producto, RelacionDeVenta, MiCliente
-#from stock.models import Producto
-#from clientes.models import Cliente
+from ventas.models import Venta, MiProducto, RelacionDeVenta, MiCliente
 
 class RelacionDeVentaInline(admin.TabularInline):
     model = RelacionDeVenta
     extra = 1
-    fields = ('producto', 'cantidad', 'incremento')
+    fields = ('producto', 'cantidad', )
 
 class VentaAdmin(admin.ModelAdmin):
     list_display = ['fecha_de_venta', 'cliente']
@@ -17,11 +15,5 @@ class VentaAdmin(admin.ModelAdmin):
     list_filter = ['fecha_de_venta']
     search_field = ['fecha_de_venta','cliente']
 
-class ProductoAdmin(admin.ModelAdmin):
-    """ PROVISIONAL, DEBE BORRARSE """
-    list_display = ['nombre','precio_en_dolar']
-    fields = ['nombre','precio_en_dolar']
-    search_field = ['nombre']
-
-admin.site.register(Producto, ProductoAdmin)
+#admin.site.register(Producto, ProductoAdmin)
 admin.site.register(Venta, VentaAdmin)
