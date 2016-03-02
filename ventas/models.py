@@ -50,7 +50,6 @@ class RelacionDeVenta(models.Model):
 	producto = models.ForeignKey( "MiProducto", on_delete = models.CASCADE )
 	venta = models.ForeignKey( "Venta", on_delete = models.CASCADE )
 	cantidad = models.PositiveIntegerField();
-	incremento = models.DecimalField( max_digits = 5, decimal_places = 2 )
 	subtotal = models.DecimalField( max_digits = 7, decimal_places = 2, null = True)
 
 	def calcular_subtotal(self):
@@ -63,16 +62,12 @@ class RelacionDeVenta(models.Model):
 		aux =  producto.cantidad - self.cantidad
 		#este retorno no va a quedar, lo dejo asi por ahora por que no se como manejar un popup
 		#para que retorne error
-<<<<<<< HEAD
 		if aux > 0:
 			return self.cantidad
 		else:
 			return null
-
-=======
 #		if aux > 0:
 #			return self.cantidad
 #		else:
 #			return render_to_response('template_name', message='Error, falta Stock')
-		return self.cantidad
->>>>>>> refs/remotes/origin/devel
+#		return self.cantidad
